@@ -14,16 +14,16 @@ import java.util.List;
 
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
-public class WatcherFolder {
+public class WatcherFiles {
 
-    private static final Logger log = LoggerFactory.getLogger(WatcherFolder.class);
+    private static final Logger log = LoggerFactory.getLogger(WatcherFiles.class);
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private String folderInput;
     private String folderOutput;
 
 
-    public WatcherFolder(String folder) throws IOException {
+    public WatcherFiles(String folder) throws IOException {
 
         this.folderInput = new StringBuilder(folder).append("\\data\\in").toString();
         this.folderOutput = new StringBuilder(folder).append("\\data\\out").toString();
@@ -46,7 +46,7 @@ public class WatcherFolder {
 
     }
 
-    public void Start() {
+    private void Start() {
 
         log.info("  >> {}", this.folderInput);
 
@@ -93,7 +93,7 @@ public class WatcherFolder {
 
     }
 
-    private void ReadFile(File file) throws IOException {
+    public void ReadFile(File file) throws IOException {
 
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -124,7 +124,7 @@ public class WatcherFolder {
         this.WriteOutput(file);
     }
 
-    private Object prepareLineToObject(String line) {
+    public Object prepareLineToObject(String line) {
 
         try {
             String[] data = line.split("ç");
