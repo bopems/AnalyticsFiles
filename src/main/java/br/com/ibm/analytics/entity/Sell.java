@@ -1,6 +1,9 @@
 package br.com.ibm.analytics.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Sell {
 
@@ -21,20 +24,26 @@ public class Sell {
         return items;
     }
 
-    //[1-34-10,2-33-1.50,3-40-0.10]
-    public void setItems(String items) {
-        String[] listItems = items.split("\\s[\\[]([0-9]{1,9}-[0-9]{1,9}-[0-9]{1,9}[.]*[0-9]{0,2}),([0-9]{1,9}-[0-9]{1,9}-[0-9]{1,9}[.]*[0-9]{0,2}),([0-9]{1,9}-[0-9]{1,9}-[0-9]{1,9}[.]*[0-9]{0,2})[\\]]]");
+    public void setItems(String inputItems) {
+        String regex = "(\\w{1,9}-\\d{1,9}-\\d{1,9}[.]{0,1}\\d{0,4})";
+        Pattern pattern = Pattern.compile("[\\[]" + regex + "[,]" + regex + "[,]" + regex + "[\\]]");
+        Matcher matcher = pattern.matcher(inputItems);
+        matcher.find();
 
-        for (String _item : listItems) {
+        List<Item> items = new ArrayList<>();
 
-            String[] item = _item.split("-");
+        for (int idx = 1; idx <= matcher.groupCount(); idx++) {
+
+            String[] item = matcher.group(idx).split("-");
             Item insert = new Item();
             insert.setId(item[0]);
-            insert.setQuantity(Integer.parseInt(item[1]));
-            insert.setPrice(Double.parseDouble(item[2]));
+            insert.setQuantity(Float.parseFloat(item[1]));
+            insert.setPrice(Float.parseFloat(item[2]));
 
-            this.items.add(insert);
+            items.add(insert);
         }
+
+        this.items = items;
     }
 
     public String getSalesman() {
