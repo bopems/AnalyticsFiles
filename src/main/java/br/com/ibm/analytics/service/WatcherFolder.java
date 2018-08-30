@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -99,21 +100,71 @@ public class WatcherFolder {
 
         String line = "";
 
-        List<Client> clients;
-        List<Sell> sells;
-        List<Seller> sellers;
+        List<Seller> sellers = new ArrayList<>();
+        List<Client> clients = new ArrayList<>();
+        List<Sell> sells = new ArrayList<>();
 
         while ((line = bufferedReader.readLine()) != null) {
             Log.info("  >> " + line);
-            this.prepareLineToObject(line);
+
+            Object obj = this.prepareLineToObject(line);
+
+            if (obj instanceof Seller) {
+                sellers.add((Seller)obj);
+            }
+            else if (obj instanceof Client) {
+                clients.add((Client)obj);
+            }
+            else if (obj instanceof Sell) {
+                sells.add((Sell)obj);
+            }
         }
+
+        /// TODO: Inserir dados
+        this.WriteOutput(file);
     }
 
-    private void prepareLineToObject(String line) {
+    private Object prepareLineToObject(String line) {
 
-        String[] data = line.split("ç");
-        
+        try {
+            String[] data = line.split("ç");
 
+            if (!data[0].isEmpty() && Integer.compare(data[0].length(), 3) == 0) {
+
+                if (data[0].equals("001")) {
+                    Seller seller = new Seller();
+                    seller.setCpf(data[1]);
+                    seller.setName(data[2]);
+                    seller.setSalary(Double.parseDouble(data[3]));
+
+                    return seller;
+                }
+                else if (data[0].equals("002")) {
+                    Client client = new Client();
+                    client.setCnpj(data[1]);
+                    client.setName(data[2]);
+                    client.setBusiness(data[3]);
+
+                    return client;
+                }
+                else if (data[0].equals("003")) {
+                    Sell sell = new Sell();
+                    sell.setId(data[1]);
+                    sell.setItems(data[2]);
+                    sell.setSalesman(data[3]);
+
+                    return sell;
+                }
+
+            } else {
+                Log.error(" >> {}", "'Id' - Identificador invalido");
+            }
+        }
+        catch (Exception e) {
+            Log.error(" >> {}", e.toString());
+        }
+
+        return null;
     }
 
     private void WriteOutput(File file) {

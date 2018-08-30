@@ -3,16 +3,16 @@ package br.com.ibm.analytics.entity;
 public class Client {
 
     public final String identifier = "002";
-    private String cpf;
+    private String cnpj;
     private String name;
     private String business;
 
-    public String getCpf() {
-        return cpf;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getName() {
