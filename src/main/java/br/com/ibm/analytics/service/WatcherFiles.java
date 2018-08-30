@@ -75,6 +75,7 @@ public class WatcherFiles {
                     if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                         log.info("  >> Created: {}", event.context().toString());
 
+                        /// TODO: Tratar os novos dados de entrada
                         this.ReadFile((File) event.context());
 
                     }
@@ -168,7 +169,7 @@ public class WatcherFiles {
     }
 
     private void WriteOutput(File file) {
-        /// TODO
+        /// TODO: Preparar os resultados
     }
 
 }
