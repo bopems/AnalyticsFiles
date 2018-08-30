@@ -3,8 +3,8 @@ package br.com.ibm.analytics.entity;
 public class Item {
 
     private String id;
-    private Integer quantity;
-    private Double price;
+    private float quantity;
+    private float price;
 
     public String getId() {
         return id;
@@ -14,19 +14,19 @@ public class Item {
         this.id = id;
     }
 
-    public Integer getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }
