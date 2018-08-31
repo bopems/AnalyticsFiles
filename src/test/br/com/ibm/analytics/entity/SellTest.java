@@ -1,4 +1,4 @@
-package src.main.test.br.com.ibm.analytics.entity;
+package br.com.ibm.analytics.entity;
 
 import br.com.ibm.analytics.entity.Item;
 import br.com.ibm.analytics.entity.Sell;

@@ -47,7 +47,7 @@ public class Sell {
     }
 
     public String getSalesman() {
-        return salesman;
+        return salesman.trim();
     }
 
     public void setSalesman(String salesman) {

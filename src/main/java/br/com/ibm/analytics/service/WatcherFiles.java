@@ -1,16 +1,17 @@
 package br.com.ibm.analytics.service;
 
+import br.com.ibm.analytics.dto.Result;
 import br.com.ibm.analytics.entity.*;
 import com.esotericsoftware.minlog.Log;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
@@ -22,17 +23,16 @@ public class WatcherFiles {
     private String folderInput;
     private String folderOutput;
 
-
     public WatcherFiles(String folder) throws IOException {
 
         this.folderInput = new StringBuilder(folder).append("\\data\\in").toString();
         this.folderOutput = new StringBuilder(folder).append("\\data\\out").toString();
 
-        this.Init();
-        this.Start();
+        this.init();
+        this.startWacther();
     }
 
-    private void Init() throws IOException {
+    private void init() throws IOException {
 
         log.info("  >> Now {} - Path: {}", dateFormat.format(new Date()), this.folderInput);
 
@@ -41,12 +41,12 @@ public class WatcherFiles {
         files = path.listFiles(file -> file.getName().endsWith(".bat"));
 
         for(int i = 0; i < files.length; i++) {
-            this.ReadFile(files[0]);
+            this.readFile(files[0]);
         }
 
     }
 
-    private void Start() {
+    private void startWacther() {
 
         log.info("  >> {}", this.folderInput);
 
@@ -76,7 +76,7 @@ public class WatcherFiles {
                         log.info("  >> Created: {}", event.context().toString());
 
                         /// TODO: Tratar os novos dados de entrada
-                        this.ReadFile((File) event.context());
+                        this.readFile((File) event.context());
 
                     }
 
@@ -94,7 +94,7 @@ public class WatcherFiles {
 
     }
 
-    public void ReadFile(File file) throws IOException {
+    public void readFile(File file) throws IOException {
 
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -121,8 +121,61 @@ public class WatcherFiles {
             }
         }
 
-        /// TODO: Inserir dados
-        this.WriteOutput(file);
+        this.writeOutput(file.getName(), this.writeResult(sellers, clients, sells));
+    }
+
+    public String writeResult(List<Seller> sellers, List<Client> clients, List<Sell> sells) {
+
+        Result obj = new Result();
+        obj.setClientCount(clients.size());
+        obj.setSellerCount(clients.size());
+        SellerWorsestIdSaleHighest(sells, obj);
+
+        String result = new Gson().toJson(obj);
+        return result;
+    }
+
+    private void SellerWorsestIdSaleHighest(List<Sell> sells, Result result) {
+        Map<String, Float> sumSells = new HashMap<>();
+        AtomicReference<Float> total = new AtomicReference<>((float) 0);
+
+        Iterator<Sell> it = sells.iterator();
+        while(it.hasNext()) {
+            total.set((float)0);
+            Sell sell = it.next();
+            sell.getItems().forEach(item -> total.updateAndGet(v -> new Float((float) (v + item.getPrice()))));
+            sumSells.put(sell.getSalesman(), total.get());
+        }
+
+        List<String> names = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
+        Float sellWorsest = Float.MAX_VALUE;
+        Float sellHighest = Float.MIN_VALUE;
+        for (Map.Entry<String, Float> entry : sumSells.entrySet()) {
+            if (entry.getValue() <= sellWorsest) {
+                if (entry.getValue().equals(sellWorsest)) {
+                    names.add(entry.getKey());
+                }
+                else {
+                    names.clear();
+                    names.add(entry.getKey());
+                }
+                sellWorsest = entry.getValue();
+            }
+            if (entry.getValue() >= sellHighest) {
+                if (entry.getValue().equals(sellHighest)) {
+                    ids.add(entry.getKey());
+                }
+                else {
+                    ids.clear();
+                    ids.add(entry.getKey());
+                }
+                sellHighest = entry.getValue();
+            }
+        }
+
+        result.setIdSaleHighest(ids);
+        result.setSellerWorsest(names);
     }
 
     public Object prepareLineToObject(String line) {
@@ -168,8 +221,15 @@ public class WatcherFiles {
         return null;
     }
 
-    private void WriteOutput(File file) {
+    private void writeOutput(String fileName, String data) throws IOException {
         /// TODO: Preparar os resultados
+
+        String fileOut = new StringBuilder(this.folderOutput).append("//").append(fileName.replace(".bat", ".done.bat")).toString();
+        FileWriter arq = new FileWriter(fileOut);
+        PrintWriter saveArq = new PrintWriter(arq);
+        saveArq.print(data);
+        arq.close();
+
     }
 
 }

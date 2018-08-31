@@ -16,7 +16,7 @@ public class Seller {
     }
 
     public String getName() {
-        return name;
+        return name.trim();
     }
 
     public void setName(String name) {
