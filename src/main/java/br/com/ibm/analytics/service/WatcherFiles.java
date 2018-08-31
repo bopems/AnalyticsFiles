@@ -4,6 +4,7 @@ import br.com.ibm.analytics.dto.Result;
 import br.com.ibm.analytics.entity.*;
 import com.esotericsoftware.minlog.Log;
 import com.google.gson.Gson;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,8 @@ public class WatcherFiles {
 
     public WatcherFiles(String folder) throws IOException {
 
-        this.folderInput = new StringBuilder(folder).append("\\data\\in").toString();
-        this.folderOutput = new StringBuilder(folder).append("\\data\\out").toString();
+        this.folderInput = new StringBuilder(folder).append("\\data\\in\\").toString();
+        this.folderOutput = new StringBuilder(folder).append("\\data\\out\\").toString();
 
         this.init();
         this.startWacther();
@@ -41,31 +42,37 @@ public class WatcherFiles {
         files = path.listFiles(file -> file.getName().endsWith(".bat"));
 
         for(int i = 0; i < files.length; i++) {
-            this.readFile(files[0]);
+            try {
+                this.readFile(files[0]);
+                files[0].delete();
+            }
+            catch (Exception e) {
+                Log.error("  >> {}", e.toString());
+            }
         }
 
     }
 
-    private void startWacther() {
+    private void startWacther() throws IOException {
 
         log.info("  >> {}", this.folderInput);
 
         Path dir = Paths.get(this.folderInput);
 
-        try {
-            WatchService watcher = dir.getFileSystem().newWatchService();
-            dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
+        WatchService watcher = dir.getFileSystem().newWatchService();
+        dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
 
-            for (;;) {
+        for (;;) {
 
+            try {
                 WatchKey key;
                 try {
                     key = watcher.take();
-                } catch (InterruptedException x) {
+                } catch (InterruptedException e) {
                     return;
                 }
 
-                for (WatchEvent<?> event: key.pollEvents()) {
+                for (WatchEvent<?> event : key.pollEvents()) {
                     WatchEvent.Kind<?> kind = event.kind();
 
                     if (kind == OVERFLOW) {
@@ -75,9 +82,10 @@ public class WatcherFiles {
                     if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
                         log.info("  >> Created: {}", event.context().toString());
 
-                        /// TODO: Tratar os novos dados de entrada
-                        this.readFile((File) event.context());
-
+                        String fread = new StringBuilder(this.folderInput).append(event.context().toString()).toString();
+                        File file = new File(fread);
+                        this.readFile(file);
+                        file.delete();
                     }
 
                 }
@@ -87,25 +95,23 @@ public class WatcherFiles {
                     break;
                 }
             }
-
-        } catch (Exception e) {
-            Log.error("  >> {}", e.toString());
+            catch (Exception e) {
+                Log.error("  >> {}", e.toString());
+            }
         }
 
     }
 
     public void readFile(File file) throws IOException {
 
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String line = "";
+        List<String> lines = FileUtils.readLines(file, "UTF-8");
 
         List<Seller> sellers = new ArrayList<>();
         List<Client> clients = new ArrayList<>();
         List<Sell> sells = new ArrayList<>();
 
-        while ((line = bufferedReader.readLine()) != null) {
+        for (String line : lines) {
+
             Log.info("  >> " + line);
 
             Object obj = this.prepareLineToObject(line);
@@ -121,7 +127,12 @@ public class WatcherFiles {
             }
         }
 
-        this.writeOutput(file.getName(), this.writeResult(sellers, clients, sells));
+        try {
+            this.writeOutput(file.getName(), this.writeResult(sellers, clients, sells));
+        }
+        catch (Exception e) {
+            Log.error(" >> {}", e.toString());
+        }
     }
 
     public String writeResult(List<Seller> sellers, List<Client> clients, List<Sell> sells) {
@@ -224,7 +235,7 @@ public class WatcherFiles {
     private void writeOutput(String fileName, String data) throws IOException {
         /// TODO: Preparar os resultados
 
-        String fileOut = new StringBuilder(this.folderOutput).append("//").append(fileName.replace(".bat", ".done.bat")).toString();
+        String fileOut = new StringBuilder(this.folderOutput).append(fileName.replace(".bat", ".done.bat")).toString();
         FileWriter arq = new FileWriter(fileOut);
         PrintWriter saveArq = new PrintWriter(arq);
         saveArq.print(data);
