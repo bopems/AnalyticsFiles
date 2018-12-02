@@ -1,7 +1,7 @@
 package com.jeisonmp.archib.analytics.service;
 
 import com.jeisonmp.archib.analytics.dto.Result;
-import br.com.ibm.analytics.entity.*;
+import com.jeisonmp.archib.analytics.entity.*;
 import com.esotericsoftware.minlog.Log;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;

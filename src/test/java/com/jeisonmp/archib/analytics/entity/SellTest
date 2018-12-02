@@ -1,7 +1,7 @@
-package br.com.ibm.analytics.entity;
+package com.jeisonmp.archib.analytics.entity;
 
-import br.com.ibm.analytics.entity.Item;
-import br.com.ibm.analytics.entity.Sell;
+import com.jeisonmp.archib.analytics.entity.Item;
+import com.jeisonmp.archib.analytics.entity.Sell;
 import org.junit.Assert;
 import org.junit.Test;
 

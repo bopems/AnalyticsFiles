@@ -7,22 +7,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
-import java.net.UnknownHostException;
-
 @SpringBootApplication
-public class Application implements ApplicationListener<ApplicationReadyEvent> {
+public class AnalyticsFilesApplication implements ApplicationListener<ApplicationReadyEvent> {
 
-	@Value("${HOMEPATH:./}")
-	private String homePath;
+	@Value("${INPUTPATH:${user.dir}}")
+	private String inputPath;
 
-	public static void main(String args[]) throws UnknownHostException {
-		SpringApplication.run(Application.class, args);
+	public static void main(String args[]) {
+		SpringApplication.run(AnalyticsFilesApplication.class, args);
 	}
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
 		try {
-			new WatcherFiles(homePath);
+			new WatcherFiles(inputPath);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

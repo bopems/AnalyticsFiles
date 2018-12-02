@@ -3,7 +3,7 @@ FROM openjdk:8-jdk-alpine
 ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS="-Xmx2048m -Xms256m"
 
-ADD target/ReadFiles-*.jar /app.jar
+ADD target/AnalyticsFiles-*.jar /app.jar
 
 CMD echo "The application will starting now..." && \
     sleep 0 && \

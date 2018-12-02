@@ -10,8 +10,8 @@
 		<version>2.0.0.RELEASE</version>
 	</parent>
 
-	<groupId>br.com.ibm.modules</groupId>
-	<artifactId>ReadFiles</artifactId>
+	<groupId>com.jeisonmp.archib.analytics.modules</groupId>
+	<artifactId>AnalyticsFiles</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
@@ -82,12 +82,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.hateoas</groupId>
@@ -177,7 +174,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>br.com.ibm.analytics.App</mainClass>
+							<mainClass>com.jeisonmp.archib.analytics.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
