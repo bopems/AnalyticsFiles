@@ -1,4 +1,4 @@
-package br.com.ibm.analytics.entity;
+package com.jeisonmp.archib.analytics.entity;
 
 import java.util.ArrayList;
 import java.util.List;

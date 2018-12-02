@@ -1,6 +1,6 @@
-package br.com.ibm.analytics;
+package com.jeisonmp.archib.analytics;
 
-import br.com.ibm.analytics.service.WatcherFiles;
+import com.jeisonmp.archib.analytics.service.WatcherFiles;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

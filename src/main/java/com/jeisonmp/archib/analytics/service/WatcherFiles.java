@@ -1,6 +1,6 @@
-package br.com.ibm.analytics.service;
+package com.jeisonmp.archib.analytics.service;
 
-import br.com.ibm.analytics.dto.Result;
+import com.jeisonmp.archib.analytics.dto.Result;
 import br.com.ibm.analytics.entity.*;
 import com.esotericsoftware.minlog.Log;
 import com.google.gson.Gson;
