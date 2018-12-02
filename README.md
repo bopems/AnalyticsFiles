@@ -1,10 +1,11 @@
-# ReadFiles
-Projeto para entrega de avaliação IBM
+# Analytics Files
+Projeto para análise de dados de arquivos em lote.
 
 
-# Descrição do Teste
-Você deve criar um sistema de análise de dados, onde o sistema deve importar
-lotes de arquivos, ler e analisar os dados e produzir um relatório.
+# Descrição do Projeto
+O projeto é um sistema de análise de dados, onde o sistema realiza a importação de
+arquivos em lote. O sistema realiza a leitura e analisa os dados e entrega em um arquivo de saída.
+
 Existem 3 tipos de dados dentro desses arquivos.
 Para cada tipo de dados há um layout diferente.
 
@@ -31,13 +32,12 @@ O seguinte é um exemplo dos dados que o sistema deve ser capaz de ler.
 003ç08ç[1-34-10,2-33-1.50,3-40-0.10]çPaulo
 
 # Análise de dados
-Seu sistema deve ler dados do diretório padrão, localizado em% HOMEPATH% /
-data / in.
+Seu sistema deve ler dados do diretório padrão, localizado em% HOMEPATH%/data/in.
 O sistema deve ler somente arquivos .dat.
 Depois de processar todos os arquivos dentro do diretório padrão de entrada, o
-sistema deve criar um arquivo dentro do diretório de saída padrão, localizado em%
-HOMEPATH% /data/out.
-O nome do arquivo deve seguir o padrão, {flat_file_name} .done.dat.
+sistema deve criar um arquivo dentro do diretório de saída padrão, localizado em
+%HOMEPATH%/data/out.
+O nome do arquivo deve seguir o padrão, {flat_file_name}.done.dat.
 O conteúdo do arquivo de saída deve resumir os seguintes dados:
 
 ● Quantidade de clientes no arquivo de entrada
