@@ -1,4 +1,4 @@
-package com.jeisonmp.archib.analytics.entity;
+package com.bopems.analytics.entity;
 
 public class Seller {
 

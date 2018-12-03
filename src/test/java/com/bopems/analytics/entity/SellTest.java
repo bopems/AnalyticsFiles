@@ -1,15 +1,13 @@
-package com.jeisonmp.archib.analytics.entity;
+package com.bopems.analytics.entity;
 
-import com.jeisonmp.archib.analytics.entity.Item;
-import com.jeisonmp.archib.analytics.entity.Sell;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+@SpringBootTest
 public class SellTest {
 
     @Test

@@ -1,4 +1,4 @@
-package com.jeisonmp.archib.analytics;
+package com.bopems.analytics;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

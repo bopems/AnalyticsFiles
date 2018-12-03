@@ -1,4 +1,4 @@
-package com.jeisonmp.archib.analytics.entity;
+package com.bopems.analytics.entity;
 
 import java.util.ArrayList;
 import java.util.List;
