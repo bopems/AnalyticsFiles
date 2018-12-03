@@ -17,4 +17,10 @@ public class WatcherFilesTest {
 
         WatcherFile watcher = new WatcherFile();
     }
+
+    @Test
+    public void failTest() {
+
+        Assert.Equals(1, 0);
+    }
 }
