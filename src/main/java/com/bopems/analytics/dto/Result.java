@@ -1,4 +1,4 @@
-package com.jeisonmp.archib.analytics.dto;
+package com.bopems.analytics.dto;
 
 import java.util.List;
 

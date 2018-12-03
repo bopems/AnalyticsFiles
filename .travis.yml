@@ -10,8 +10,8 @@ after_success:
 - docker login -u $DOCKER_USERNAME_LOGIN -p $DOCKER_PASSWORD
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - export IMAGE_NAME=$DOCKER_USERNAME_BOPEMS/analyticsfiles
-- docker ps
+- docker images
 - docker build -t $IMAGE_NAME:$TRAVIS_COMMIT .
 - docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:$TAG
-- docker ps
+- docker images
 - docker push $IMAGE_NAME

@@ -1,9 +1,11 @@
-package com.jeisonmp.archib.analytics.service;
+package com.bopems.analytics.service;
 
-import com.jeisonmp.archib.analytics.dto.Result;
-import com.jeisonmp.archib.analytics.entity.*;
+import com.bopems.analytics.dto.Result;
+import com.bopems.analytics.entity.Client;
+import com.bopems.analytics.entity.Sell;
 import com.esotericsoftware.minlog.Log;
 import com.google.gson.Gson;
+import com.bopems.analytics.entity.Seller;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
