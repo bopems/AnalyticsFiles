@@ -14,10 +14,4 @@ public class WatcherFilesTest {
 
         WatcherFiles watcher = new WatcherFiles(System.getProperty("user.dir"));
     }
-
-    @Test
-    public void failTest() {
-
-        Assert.assertEquals(1, 0);
-    }
 }
