@@ -1,7 +1,10 @@
 language: java
 jdk: oraclejdk8
 
-# blacklist
-branches:
-  except:
-  - master
+sudo: required
+
+services:
+- docker
+
+script:
+  - bash ./travis-deploy.sh
