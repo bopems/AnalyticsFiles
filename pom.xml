@@ -174,7 +174,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.jeisonmp.archib.analytics.App</mainClass>
+							<mainClass>com.bopems.analytics.AnalyticsFilesApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
