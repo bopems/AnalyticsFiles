@@ -8,3 +8,9 @@ services:
 
 script:
   - bash ./travis-deploy.sh
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: 95592807-0119-4050-9e34-ddf3fe3fb29b
+  app: bopems-analyticsfiles
