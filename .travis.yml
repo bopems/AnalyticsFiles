@@ -1,16 +1,12 @@
 language: java
 jdk: oraclejdk8
-
 sudo: required
-
 services:
 - docker
-
 script:
-  - bash ./travis-deploy.sh
-
+- bash ./travis-deploy.sh
 deploy:
   provider: heroku
   api_key:
-    secure: 95592807-0119-4050-9e34-ddf3fe3fb29b
+    secure: Xf7cWLvZpLKhqTMC9lLvTYUrHqNLlaBiehPBh3YI0nBgaAyuoObXs2spbzfjlsqmrWBqXtAWn+HIkNl43tteHiNo/eomXN6RJXwc3BcKBduu4aXTKAWatcJ1O/3bYdUM43DGvX1TUqlmXRq4jtbMqRh5fwOD8Iz1nRq4cyl/cSRSj2SDBkrLTVWlUeBwFUrRhHGbLD8Q8egEcQjrA3Hhue+Nx2FlVYCoLh3J0VYhic5+D/Hs9yQt5XHdBD+NvvrLXYhtwwujCuNAfuNYTzlDpdibV3W1wBEu7qXkhbh1iNDAezaf6YAv6lyA5oVnqX8xUr9yyXZ7FU8UHHEv6X2+zKKq3ZaZ5+NCYNPb3s9tvBrT1vgYBLbwXltzk0EWGpvTr85qp381ZxOQWDuLGf+5X7ecmH9MtPWQ+1AL4hAwQXEmgF3XmTIi62n1bp250GuAeQmbzeZUY+CQAlzoY56VexMvo55Yewuc9ttDLFy5ruAvEQPdHNm9LV0kLlf+3ohC+7TpnfNIa2laSVbiymE+eB59kTcnf+RqCQRTF4Euk2AfSku2W0vwoadlxAiarRuWaNhpp4zPxd/pjRu1McKg4slBM91Sl6Glhhi+oeI3cmoexz2q6EhFdn4srlI73cEelZhcqr+eJMdkD5WQ15l/aC3ikc+XFcML5q+LIP8DbLE=
   app: bopems-analyticsfiles
