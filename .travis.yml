@@ -9,7 +9,7 @@ script:
 after_success:
   # for local testing, needs to be set on travis, too:
   # export HEROKU_TOKEN=$(heroku auth:token)
-- docker login --username=_ --password=$HEROKU_TOKEN registry.heroku.com
+- docker login --username=maxjeison --password=$HEROKU_TOKEN registry.heroku.com
 - docker tag $DOCKER_IMAGE_PROJECT/$DOCKER_IMAGE_NAME registry.heroku.com/$DOCKER_IMAGE_PROJECT-$DOCKER_IMAGE_NAME/web
 - docker push registry.heroku.com/$DOCKER_IMAGE_PROJECT-$DOCKER_IMAGE_NAME/web
 - heroku container:push web -a $DOCKER_IMAGE_PROJECT-$DOCKER_IMAGE_NAME
